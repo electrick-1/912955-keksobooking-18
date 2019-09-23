@@ -9,7 +9,7 @@ var MOCK = {
 
   offer: {
     title: 'Заголовок предложения ',
-    address: '{{location.x}}, {{location.y}}',
+    address: 'Адрес',
     price: {min: 1000, max: 5000},
     type: ['palace', 'flat', 'house', 'bungalo'],
     rooms: {min: 1, max: 5},
@@ -67,6 +67,8 @@ var generateData = function () {
   return arr;
 };
 
+var data = generateData();
+
 document.querySelector('.map').classList.remove('map--faded');
 
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -81,8 +83,8 @@ var renderMapPin = function (pin) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < generateData().length; i++) {
-  fragment.appendChild(renderMapPin(generateData()[i]));
+for (var i = 0; i < data.length; i++) {
+  fragment.appendChild(renderMapPin(data[i]));
 }
 
 var mapPins = document.querySelector('.map__pins');
