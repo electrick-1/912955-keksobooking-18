@@ -1,5 +1,6 @@
 'use strict';
 
+var KEYCODE_ENTER = 13;
 var PINS = 8;
 var LOCATION_RANGE = 1000;
 var MOCK = {
@@ -101,52 +102,68 @@ var getAdForm = function () {
 
 getAdForm();
 
-var removeAdForm = function () {
+var createPinAddress = adForm.querySelector('#address');
+var removeAdFormFeldset = function () {
   for (var i = 0; i < fieldsetArray.length; i++) {
     fieldsetArray[i].removeAttribute('disabled', true);
   }
 };
-
-var createPinAddress = adForm.querySelector('#address');
-
-var mapPinMain = document.querySelector('.map__pin--main');
-mapPinMain.addEventListener('mousedown', function () {
-  removeAdForm();
+var removeAdForm = function () {
+  document.querySelector('.ad-form').classList.remove('ad-form--disabled');
+};
+var removeMapFaded = function () {
   document.querySelector('.map').classList.remove('map--faded');
-  getFragment();
+};
+var mapPinMain = document.querySelector('.map__pin--main');
+var createPinAddressValue = function () {
   createPinAddress.value = mapPinMain.style.top + ', ' + mapPinMain.style.left;
+};
+
+var activePage = function () {
+  removeAdFormFeldset();
+  removeMapFaded();
+  removeAdForm();
+  getFragment();
+  createPinAddressValue();
+};
+
+mapPinMain.addEventListener('mousedown', function () {
+  activePage();
 });
 
 mapPinMain.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
-    removeAdForm();
-    document.querySelector('.map').classList.remove('map--faded');
-    getFragment();
-    createPinAddress.value = mapPinMain.style.top + ', ' + mapPinMain.style.left;
+  if (evt.keyCode === KEYCODE_ENTER) {
+    activePage();
   }
 });
 
 var roomNumber = adForm.querySelector('#room_number');
-var roomNumberOptions = roomNumber.querySelectorAll('option');
 var capacity = adForm.querySelector('#capacity');
 var capacityOptions = capacity.querySelectorAll('option');
 
-roomNumber.addEventListener('change', function () {
-  for (var i = 0; i < roomNumberOptions.length; i++) {
-    if (roomNumberOptions[i].value === '100') {
-      for (var j = 0; j < capacityOptions.length; j++) {
-        if (capacityOptions[j].value !== '0') {
-          capacityOptions[j].toggleAttribute('disabled', capacityOptions[j].value === '1' || capacityOptions[j].value === '2' || capacityOptions[j].value === '3');
-        }
+var roomValues = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
+
+var checkRoom = function (value) {
+  capacityOptions.forEach(function (opt) {
+    opt.disabled = true;
+  });
+  roomValues[value].forEach(function (it) {
+    capacityOptions.forEach(function (option) {
+      if (Number(option.value) === it) {
+        option.disabled = false;
+        option.selected = true;
       }
-    }
-    if (roomNumberOptions[i].value === '1') {
-      for (var k = 0; k < capacityOptions.length; k++) {
-        capacityOptions[i].removeAttribute('disabled', capacityOptions[i].value === '0' || capacityOptions[i].value === '1' || capacityOptions[i].value === '2' || capacityOptions[i].value === '3');
-        if (capacityOptions[k].value !== '1') {
-          capacityOptions[k].toggleAttribute('disabled', capacityOptions[k].value === '0' || capacityOptions[k].value === '2' || capacityOptions[k].value === '3');
-        }
-      }
-    }
-  }
+    });
+  });
+};
+
+roomNumber.addEventListener('change', function (evt) {
+  checkRoom(evt.target.value);
 });
+
+checkRoom(1);
