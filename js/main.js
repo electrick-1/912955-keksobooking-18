@@ -28,6 +28,24 @@ var MOCK = {
   }
 };
 
+var roomValues = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
+
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var mapPinMain = document.querySelector('.map__pin--main');
+var mapPins = document.querySelector('.map__pins');
+var fragment = document.createDocumentFragment();
+var adForm = document.querySelector('.ad-form');
+var createPinAddress = adForm.querySelector('#address');
+var fieldsetArray = adForm.querySelectorAll('fieldset');
+var roomNumber = adForm.querySelector('#room_number');
+var capacity = adForm.querySelector('#capacity');
+var capacityOptions = capacity.querySelectorAll('option');
+
 var generateRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -67,10 +85,8 @@ var generateData = function () {
   }
   return arr;
 };
-
 var data = generateData();
 
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var renderMapPin = function (pin) {
   var mapPinElement = pinTemplate.cloneNode(true);
   mapPinElement.style.left = pin.location.x + 'px';
@@ -81,50 +97,20 @@ var renderMapPin = function (pin) {
   return mapPinElement;
 };
 
-var getFragment = function () {
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < data.length; i++) {
-    fragment.appendChild(renderMapPin(data[i]));
-  }
 
-  var mapPins = document.querySelector('.map__pins');
-  mapPins.appendChild(fragment);
-};
-
-var adForm = document.querySelector('.ad-form');
-var fieldsetArray = adForm.querySelectorAll('fieldset');
-
-var getAdForm = function () {
-  for (var i = 0; i < fieldsetArray.length; i++) {
-    fieldsetArray[i].setAttribute('disabled', true);
-  }
-};
-
-getAdForm();
-
-var createPinAddress = adForm.querySelector('#address');
-var removeAdFormFeldset = function () {
+var activePage = function () {
   for (var i = 0; i < fieldsetArray.length; i++) {
     fieldsetArray[i].removeAttribute('disabled', true);
   }
-};
-var removeAdForm = function () {
-  document.querySelector('.ad-form').classList.remove('ad-form--disabled');
-};
-var removeMapFaded = function () {
-  document.querySelector('.map').classList.remove('map--faded');
-};
-var mapPinMain = document.querySelector('.map__pin--main');
-var createPinAddressValue = function () {
-  createPinAddress.value = mapPinMain.style.top + ', ' + mapPinMain.style.left;
-};
 
-var activePage = function () {
-  removeAdFormFeldset();
-  removeMapFaded();
-  removeAdForm();
-  getFragment();
-  createPinAddressValue();
+  document.querySelector('.ad-form').classList.remove('ad-form--disabled');
+  document.querySelector('.map').classList.remove('map--faded');
+  createPinAddress.value = mapPinMain.style.top + ', ' + mapPinMain.style.left;
+
+  for (var j = 0; j < data.length; j++) {
+    fragment.appendChild(renderMapPin(data[j]));
+  }
+  mapPins.appendChild(fragment);
 };
 
 mapPinMain.addEventListener('mousedown', function () {
@@ -136,17 +122,6 @@ mapPinMain.addEventListener('keydown', function (evt) {
     activePage();
   }
 });
-
-var roomNumber = adForm.querySelector('#room_number');
-var capacity = adForm.querySelector('#capacity');
-var capacityOptions = capacity.querySelectorAll('option');
-
-var roomValues = {
-  1: [1],
-  2: [1, 2],
-  3: [1, 2, 3],
-  100: [0]
-};
 
 var checkRoom = function (value) {
   capacityOptions.forEach(function (opt) {
