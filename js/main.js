@@ -1,5 +1,6 @@
 'use strict';
 
+var KEYCODE_ENTER = 13;
 var PINS = 8;
 var LOCATION_RANGE = 1000;
 var MOCK = {
@@ -26,6 +27,23 @@ var MOCK = {
     'y': {min: 130, max: 630}
   }
 };
+
+var roomValues = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
+
+var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+var mapPinMain = document.querySelector('.map__pin--main');
+var mapPins = document.querySelector('.map__pins');
+var adForm = document.querySelector('.ad-form');
+var createPinAddress = adForm.querySelector('#address');
+var fieldsetArray = adForm.querySelectorAll('fieldset');
+var roomNumber = adForm.querySelector('#room_number');
+var capacity = adForm.querySelector('#capacity');
+var capacityOptions = capacity.querySelectorAll('option');
 
 var generateRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -66,13 +84,9 @@ var generateData = function () {
   }
   return arr;
 };
-
 var data = generateData();
 
-document.querySelector('.map').classList.remove('map--faded');
-
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var renderMapPin = function (pin) {
+var createMapPin = function (pin) {
   var mapPinElement = pinTemplate.cloneNode(true);
   mapPinElement.style.left = pin.location.x + 'px';
   mapPinElement.style.top = pin.location.y + 'px';
@@ -82,10 +96,57 @@ var renderMapPin = function (pin) {
   return mapPinElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < data.length; i++) {
-  fragment.appendChild(renderMapPin(data[i]));
-}
+var renderPins = function (dataPin) {
+  dataPin.forEach(function (it) {
+    mapPins.appendChild(createMapPin(it));
+  });
+};
 
-var mapPins = document.querySelector('.map__pins');
-mapPins.appendChild(fragment);
+var removeDisabledAttribute = function () {
+  for (var i = 0; i < fieldsetArray.length; i++) {
+    fieldsetArray[i].removeAttribute('disabled', true);
+  }
+  document.querySelector('.ad-form').classList.remove('ad-form--disabled');
+  document.querySelector('.map').classList.remove('map--faded');
+};
+
+var setAddress = function () {
+  createPinAddress.value = mapPinMain.style.top + ', ' + mapPinMain.style.left;
+  createPinAddress.setAttribute('readonly', true);
+};
+
+var activePage = function () {
+  removeDisabledAttribute();
+  setAddress();
+  renderPins(data);
+};
+
+mapPinMain.addEventListener('mousedown', function () {
+  activePage();
+});
+
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === KEYCODE_ENTER) {
+    activePage();
+  }
+});
+
+var checkRoom = function (value) {
+  capacityOptions.forEach(function (opt) {
+    opt.disabled = true;
+  });
+  roomValues[value].forEach(function (it) {
+    capacityOptions.forEach(function (option) {
+      if (Number(option.value) === it) {
+        option.disabled = false;
+        option.selected = true;
+      }
+    });
+  });
+};
+
+roomNumber.addEventListener('change', function (evt) {
+  checkRoom(evt.target.value);
+});
+
+checkRoom(1);
