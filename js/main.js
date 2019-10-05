@@ -38,7 +38,6 @@ var roomValues = {
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapPinMain = document.querySelector('.map__pin--main');
 var mapPins = document.querySelector('.map__pins');
-var fragment = document.createDocumentFragment();
 var adForm = document.querySelector('.ad-form');
 var createPinAddress = adForm.querySelector('#address');
 var fieldsetArray = adForm.querySelectorAll('fieldset');
@@ -87,7 +86,7 @@ var generateData = function () {
 };
 var data = generateData();
 
-var renderMapPin = function (pin) {
+var createMapPin = function (pin) {
   var mapPinElement = pinTemplate.cloneNode(true);
   mapPinElement.style.left = pin.location.x + 'px';
   mapPinElement.style.top = pin.location.y + 'px';
@@ -97,20 +96,29 @@ var renderMapPin = function (pin) {
   return mapPinElement;
 };
 
+var renderPins = function (dataPin) {
+  dataPin.forEach(function (it) {
+    mapPins.appendChild(createMapPin(it));
+  });
+};
 
-var activePage = function () {
+var removeDisabledAttribute = function () {
   for (var i = 0; i < fieldsetArray.length; i++) {
     fieldsetArray[i].removeAttribute('disabled', true);
   }
-
   document.querySelector('.ad-form').classList.remove('ad-form--disabled');
   document.querySelector('.map').classList.remove('map--faded');
-  createPinAddress.value = mapPinMain.style.top + ', ' + mapPinMain.style.left;
+};
 
-  for (var j = 0; j < data.length; j++) {
-    fragment.appendChild(renderMapPin(data[j]));
-  }
-  mapPins.appendChild(fragment);
+var setAddress = function () {
+  createPinAddress.value = mapPinMain.style.top + ', ' + mapPinMain.style.left;
+  createPinAddress.setAttribute('readonly', true);
+};
+
+var activePage = function () {
+  removeDisabledAttribute();
+  setAddress();
+  renderPins(data);
 };
 
 mapPinMain.addEventListener('mousedown', function () {
