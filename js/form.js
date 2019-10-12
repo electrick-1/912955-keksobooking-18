@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var roomNumber = document.querySelector('#room_number');
+  var capacity = document.querySelector('#capacity');
+
   var roomValues = {
     1: [1],
     2: [1, 2],
@@ -8,7 +11,7 @@
     100: [0]
   };
 
-  var capacityOptions = window.utils.capacity.querySelectorAll('option');
+  var capacityOptions = capacity.querySelectorAll('option');
 
   var checkRoom = function (value) {
     capacityOptions.forEach(function (opt) {
@@ -24,7 +27,7 @@
     });
   };
 
-  window.utils.roomNumber.addEventListener('change', function (evt) {
+  roomNumber.addEventListener('change', function (evt) {
     checkRoom(evt.target.value);
   });
 

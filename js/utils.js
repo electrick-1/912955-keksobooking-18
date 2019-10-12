@@ -16,9 +16,6 @@
   window.utils = {
     KEYCODE_ENTER: 13,
     generateRandomNumber: generateRandomNumber,
-    generateRandomLength: generateRandomLength,
-    adForm: document.querySelector('.ad-form'),
-    roomNumber: document.querySelector('#room_number'),
-    capacity: document.querySelector('#capacity')
+    generateRandomLength: generateRandomLength
   };
 })();

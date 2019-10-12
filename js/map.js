@@ -2,8 +2,9 @@
 
 (function () {
   var mapPinMain = document.querySelector('.map__pin--main');
-  var createPinAddress = window.utils.adForm.querySelector('#address');
-  var fieldsetArray = window.utils.adForm.querySelectorAll('fieldset');
+  var adForm = document.querySelector('.ad-form');
+  var createPinAddress = adForm.querySelector('#address');
+  var fieldsetArray = adForm.querySelectorAll('fieldset');
 
   var removeDisabledAttribute = function () {
     for (var i = 0; i < fieldsetArray.length; i++) {
