@@ -8,7 +8,7 @@
     100: [0]
   };
 
-  var capacityOptions = window.util.capacity.querySelectorAll('option');
+  var capacityOptions = window.utils.capacity.querySelectorAll('option');
 
   var checkRoom = function (value) {
     capacityOptions.forEach(function (opt) {
@@ -24,7 +24,7 @@
     });
   };
 
-  window.util.roomNumber.addEventListener('change', function (evt) {
+  window.utils.roomNumber.addEventListener('change', function (evt) {
     checkRoom(evt.target.value);
   });
 

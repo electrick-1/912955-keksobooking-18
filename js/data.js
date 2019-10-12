@@ -1,16 +1,6 @@
 'use strict';
 
 (function () {
-  window.util = {
-    KEYCODE_ENTER: 13,
-    generateRandomNumber: function (min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    },
-    adForm: document.querySelector('.ad-form'),
-    roomNumber: document.querySelector('#room_number'),
-    capacity: document.querySelector('#capacity')
-  };
-
   var PINS = 8;
   var LOCATION_RANGE = 1000;
   var MOCK = {
@@ -38,15 +28,6 @@
     }
   };
 
-  var generateRandomLength = function (arr) {
-    var array = [];
-    var arrayQuantity = window.util.generateRandomNumber(0, arr.length - 1);
-    for (var i = 0; i < arrayQuantity; i++) {
-      array.push(arr[i]);
-    }
-    return array;
-  };
-
   var generateData = function () {
     var arr = [];
     for (var i = 0; i < PINS; i++) {
@@ -54,20 +35,20 @@
         author: {avatar: 'img/avatars/user' + MOCK.author.avatar[i] + '.png'},
         offer: {
           title: MOCK.offer.title + (i + 1),
-          address: window.util.generateRandomNumber(0, LOCATION_RANGE) + ', ' + window.util.generateRandomNumber(MOCK.location.y.min, MOCK.location.y.max),
-          price: window.util.generateRandomNumber(MOCK.offer.price.min, MOCK.offer.price.max),
-          type: MOCK.offer.type[window.util.generateRandomNumber(0, MOCK.offer.type.length - 1)],
-          rooms: window.util.generateRandomNumber(MOCK.offer.rooms.min, MOCK.offer.rooms.max),
-          guests: window.util.generateRandomNumber(MOCK.offer.guests.min, MOCK.offer.guests.max),
-          checkin: MOCK.offer.checkin[window.util.generateRandomNumber(0, MOCK.offer.checkin.length - 1)],
-          checkout: MOCK.offer.checkout[window.util.generateRandomNumber(0, MOCK.offer.checkout.length - 1)],
-          features: generateRandomLength(MOCK.offer.features),
+          address: window.utils.generateRandomNumber(0, LOCATION_RANGE) + ', ' + window.utils.generateRandomNumber(MOCK.location.y.min, MOCK.location.y.max),
+          price: window.utils.generateRandomNumber(MOCK.offer.price.min, MOCK.offer.price.max),
+          type: MOCK.offer.type[window.utils.generateRandomNumber(0, MOCK.offer.type.length - 1)],
+          rooms: window.utils.generateRandomNumber(MOCK.offer.rooms.min, MOCK.offer.rooms.max),
+          guests: window.utils.generateRandomNumber(MOCK.offer.guests.min, MOCK.offer.guests.max),
+          checkin: MOCK.offer.checkin[window.utils.generateRandomNumber(0, MOCK.offer.checkin.length - 1)],
+          checkout: MOCK.offer.checkout[window.utils.generateRandomNumber(0, MOCK.offer.checkout.length - 1)],
+          features: window.utils.generateRandomLength(MOCK.offer.features),
           description: MOCK.offer.description + (i + 1),
-          photos: generateRandomLength(MOCK.offer.photos)
+          photos: window.utils.generateRandomLength(MOCK.offer.photos)
         },
         location: {
-          x: window.util.generateRandomNumber(0, LOCATION_RANGE),
-          y: window.util.generateRandomNumber(MOCK.location.y.min, MOCK.location.y.max)
+          x: window.utils.generateRandomNumber(0, LOCATION_RANGE),
+          y: window.utils.generateRandomNumber(MOCK.location.y.min, MOCK.location.y.max)
         }
       };
     }
