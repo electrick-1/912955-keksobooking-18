@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var main = document.querySelector('main');
+
   var generateRandomNumber = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
@@ -16,6 +18,7 @@
   window.utils = {
     KEYCODE_ENTER: 13,
     generateRandomNumber: generateRandomNumber,
-    generateRandomLength: generateRandomLength
+    generateRandomLength: generateRandomLength,
+    main: main
   };
 })();
