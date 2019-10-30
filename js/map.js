@@ -5,6 +5,7 @@
   var adForm = document.querySelector('.ad-form');
   var createPinAddress = adForm.querySelector('#address');
   var fieldsetArray = adForm.querySelectorAll('fieldset');
+  var data = [];
 
   var removeDisabledAttribute = function () {
     for (var i = 0; i < fieldsetArray.length; i++) {
@@ -20,7 +21,8 @@
   };
 
   var successHandler = function (pins) {
-    window.pin.renderPins(pins);
+    data = pins;
+    window.pin.renderPins(data);
   };
 
   var errorHandler = function (message) {
