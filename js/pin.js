@@ -14,6 +14,13 @@
     return mapPinElement;
   };
 
+  var removePins = function () {
+    var toRemove = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    toRemove.forEach(function (it) {
+      it.remove();
+    });
+  };
+
   var renderPins = function (dataPin) {
     dataPin.forEach(function (it) {
       mapPins.appendChild(createMapPin(it));
@@ -21,6 +28,7 @@
   };
 
   window.pin = {
-    renderPins: renderPins
+    renderPins: renderPins,
+    removePins: removePins
   };
 })();
