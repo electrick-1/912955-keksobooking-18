@@ -2,8 +2,7 @@
 
 (function () {
   var map = document.querySelector('.map');
-  var card = document.querySelector('#card');
-  var cardTemplate = card.content.querySelector('article');
+  var cardTemplate = document.querySelector('#card').content.querySelector('article');
   var rooms;
 
   var type = {
@@ -16,20 +15,11 @@
   var createCardElement = function (data) {
     var cardElement = cardTemplate.cloneNode(true);
 
-    var cardTitle = cardElement.querySelector('.popup__title');
-    cardTitle.textContent = data.offer.title;
+    cardElement.querySelector('.popup__title').textContent = data.offer.title;
+    cardElement.querySelector('.popup__text--address').textContent = data.offer.address;
+    cardElement.querySelector('.popup__text--price').textContent = data.offer.price + '₽/ночь';
+    cardElement.querySelector('.popup__type').textContent = type[data.offer.type];
 
-    var cardAddress = cardElement.querySelector('.popup__text--address');
-    cardAddress.textContent = data.offer.address;
-
-    var cardPrice = cardElement.querySelector('.popup__text--price');
-    cardPrice.textContent = data.offer.price + '₽/ночь';
-
-    var cardType = cardElement.querySelector('.popup__type');
-
-    cardType.textContent = type[data.offer.type];
-
-    var cardRooms = cardElement.querySelector('.popup__text--capacity');
     switch (data.offer.rooms) {
       case 0: rooms = ' комнат для ';
         break;
@@ -40,7 +30,7 @@
     }
 
     var guests = data.offer.guests === 1 ? ' гостя' : data.offer.guests + ' гостей';
-    cardRooms.textContent = data.offer.rooms + rooms + guests;
+    cardElement.querySelector('.popup__text--capacity').textContent = data.offer.rooms + rooms + guests;
 
     var cardTime = cardElement.querySelector('.popup__text--time');
     cardTime.textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
@@ -48,16 +38,14 @@
     var cardFeatures = cardElement.querySelector('.popup__features');
     createFeaturesElement(cardFeatures, data.offer.features);
 
-    var cardDescription = cardElement.querySelector('.popup__description');
-    cardDescription.textContent = data.offer.description;
+    cardElement.querySelector('.popup__description').textContent = data.offer.description;
 
     var cardPhotos = cardElement.querySelector('.popup__photos');
     createPhotosElement(cardPhotos, data.offer.photos);
 
-    var cardAvatar = cardElement.querySelector('.popup__avatar');
-    cardAvatar.src = data.author.avatar;
+    cardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
-    return cardElement;
+    window.map.map.appendChild(cardElement);
   };
 
   var createFeaturesElement = function (element, data) {
@@ -83,13 +71,7 @@
     });
   };
 
-  var createCards = function (data) {
-    data.forEach(function (it) {
-      map.appendChild(createCardElement(it));
-    });
-  };
-
   window.card = {
-    createCards: createCards
+    createCardElement: createCardElement
   };
 })();
