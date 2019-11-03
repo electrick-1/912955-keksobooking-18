@@ -29,8 +29,6 @@
 
     cardType.textContent = type[data.offer.type];
 
-    // insertBefore || insertAdjacentElement
-
     var cardRooms = cardElement.querySelector('.popup__text--capacity');
     switch (data.offer.rooms) {
       case 0: rooms = ' комнат для ';
@@ -49,8 +47,6 @@
 
     var cardFeatures = cardElement.querySelector('.popup__features');
     createFeaturesElement(cardFeatures, data.offer.features);
-
-    // В список .popup__features выведите все доступные удобства в объявлении.
 
     var cardDescription = cardElement.querySelector('.popup__description');
     cardDescription.textContent = data.offer.description;
