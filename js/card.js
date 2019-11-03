@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var map = document.querySelector('.map');
   var cardTemplate = document.querySelector('#card').content.querySelector('article');
   var rooms;
 
