@@ -35,6 +35,7 @@
   var successHandler = function (pins) {
     window.data = pins;
     window.pin.renderPins(window.filter.getAllFilter(pins));
+    window.card.createCardElement(pins[5]);
   };
 
   var errorHandler = function (message) {
@@ -74,6 +75,7 @@
   });
 
   window.map = {
+    map: map,
     data: data,
     mapFilters: mapFilters
   };
