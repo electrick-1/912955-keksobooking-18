@@ -44,7 +44,9 @@
 
     cardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
-    window.map.map.appendChild(cardElement);
+    removeCardHandler(cardElement);
+
+    return cardElement;
   };
 
   var createFeaturesElement = function (element, data) {
@@ -70,7 +72,20 @@
     });
   };
 
+  var removeCardHandler = function (element) {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.utils.KEYCODE_ESC) {
+        element.remove();
+        document.removeEventListener('keydown', removeCardHandler);
+      }
+    });
+  };
+
+  var renderCard = function (data) {
+    window.map.map.appendChild(createCardElement(data));
+  };
+
   window.card = {
-    createCardElement: createCardElement
+    renderCard: renderCard
   };
 })();
