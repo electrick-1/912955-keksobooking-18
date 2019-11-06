@@ -44,7 +44,16 @@
 
     cardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
-    removeCardHandler(cardElement);
+    var removeCardHandler = function () {
+      document.addEventListener('keydown', function (evt) {
+        if (evt.keyCode === window.utils.KEYCODE_ESC) {
+          removeCard();
+          document.removeEventListener('keydown', removeCardHandler);
+        }
+      });
+    }();
+
+    cardElement.querySelector('.popup__close').addEventListener('click', removeCard);
 
     return cardElement;
   };
@@ -72,13 +81,8 @@
     });
   };
 
-  var removeCardHandler = function (element) {
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.KEYCODE_ESC) {
-        element.remove();
-        document.removeEventListener('keydown', removeCardHandler);
-      }
-    });
+  var removeCard = function () {
+    document.querySelector('.map__card').remove();
   };
 
   var renderCard = function (data) {
@@ -86,6 +90,7 @@
   };
 
   window.card = {
-    renderCard: renderCard
+    renderCard: renderCard,
+    removeCard: removeCard
   };
 })();

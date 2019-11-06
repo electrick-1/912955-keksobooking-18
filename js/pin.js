@@ -12,30 +12,23 @@
     mapPinElement.querySelector('img').alt = pin.offer.title;
 
     mapPinElement.addEventListener('click', function () {
-      if (document.querySelector('.map__card')) {
-        document.querySelector('.map__card').remove();
-      }
-      window.card.renderCard(pin);
-      removeCard();
+      pinListenerHandler(pin);
     });
 
     mapPinElement.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.utils.KEYCODE_ENTER) {
-        if (document.querySelector('.map__card')) {
-          document.querySelector('.map__card').remove();
-        }
-        window.card.renderCard(pin);
-        removeCard();
+        pinListenerHandler(pin);
       }
     });
 
     return mapPinElement;
   };
 
-  var removeCard = function () {
-    document.querySelector('.popup__close').addEventListener('click', function () {
-      document.querySelector('.map__card').remove();
-    });
+  var pinListenerHandler = function (dataPin) {
+    if (document.querySelector('.map__card')) {
+      window.card.removeCard();
+    }
+    window.card.renderCard(dataPin);
   };
 
   var removePins = function () {
