@@ -11,7 +11,24 @@
     mapPinElement.querySelector('img').src = pin.author.avatar;
     mapPinElement.querySelector('img').alt = pin.offer.title;
 
+    mapPinElement.addEventListener('click', function () {
+      pinListenerHandler(pin);
+    });
+
+    mapPinElement.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.utils.KEYCODE_ENTER) {
+        pinListenerHandler(pin);
+      }
+    });
+
     return mapPinElement;
+  };
+
+  var pinListenerHandler = function (dataPin) {
+    if (document.querySelector('.map__card')) {
+      window.card.removeCard();
+    }
+    window.card.renderCard(dataPin);
   };
 
   var removePins = function () {
@@ -29,6 +46,6 @@
 
   window.pin = {
     renderPins: renderPins,
-    removePins: removePins
+    removePins: removePins,
   };
 })();

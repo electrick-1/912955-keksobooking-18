@@ -44,7 +44,11 @@
 
     cardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
-    window.map.map.appendChild(cardElement);
+    document.addEventListener('keydown', pushEscButton);
+
+    cardElement.querySelector('.popup__close').addEventListener('click', removeCard);
+
+    return cardElement;
   };
 
   var createFeaturesElement = function (element, data) {
@@ -70,7 +74,23 @@
     });
   };
 
+  var pushEscButton = function (evt) {
+    if (evt.keyCode === window.utils.KEYCODE_ESC) {
+      removeCard();
+    }
+  };
+
+  var removeCard = function () {
+    document.querySelector('.map__card').remove();
+    document.removeEventListener('keydown', pushEscButton);
+  };
+
+  var renderCard = function (data) {
+    window.map.map.appendChild(createCardElement(data));
+  };
+
   window.card = {
-    createCardElement: createCardElement
+    renderCard: renderCard,
+    removeCard: removeCard
   };
 })();

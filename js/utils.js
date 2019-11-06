@@ -17,6 +17,7 @@
 
   window.utils = {
     KEYCODE_ENTER: 13,
+    KEYCODE_ESC: 27,
     generateRandomNumber: generateRandomNumber,
     generateRandomLength: generateRandomLength,
     main: main
