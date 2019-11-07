@@ -6,8 +6,8 @@
 
   var createMapPin = function (pin) {
     var mapPinElement = pinTemplate.cloneNode(true);
-    mapPinElement.style.left = pin.location.x + 'px';
-    mapPinElement.style.top = pin.location.y + 'px';
+    mapPinElement.style.left = pin.location.x + window.utils.PIN.WIDTH / 2 + 'px';
+    mapPinElement.style.top = pin.location.y + window.utils.PIN.HEIGHT + 'px';
     mapPinElement.querySelector('img').src = pin.author.avatar;
     mapPinElement.querySelector('img').alt = pin.offer.title;
 
