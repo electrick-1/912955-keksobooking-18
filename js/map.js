@@ -63,9 +63,7 @@
     setAddress();
   };
 
-  mapPinMain.addEventListener('mousedown', function () {
-    activePage();
-  });
+  mapPinMain.addEventListener('mousedown', activePage);
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.utils.KEYCODE_ENTER) {
@@ -75,6 +73,7 @@
 
   mapPinMain.addEventListener('mousedown', function (downEvt) {
     downEvt.preventDefault();
+    mapPinMain.removeEventListener('mousedown', activePage);
 
     var startCoords = {
       x: downEvt.clientX,
