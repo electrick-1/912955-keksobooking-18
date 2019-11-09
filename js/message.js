@@ -10,14 +10,22 @@
     success.style.position = 'absolute';
     window.utils.main.insertAdjacentElement('afterbegin', success);
 
-    document.addEventListener('click', function () {
-      success.remove();
+    success.addEventListener('click', function () {
+      successRemove();
     });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.utils.KEYCODE_ENTER) {
-        success.remove();
+
+    var onPressEscButton = function (evt) {
+      if (evt.keyCode === window.utils.KEYCODE_ESC) {
+        successRemove();
       }
-    });
+    };
+
+    document.addEventListener('keydown', onPressEscButton);
+
+    var successRemove = function () {
+      success.remove();
+      document.removeEventListener('keydown', onPressEscButton);
+    };
   };
 
   var errorHandler = function (message) {
@@ -31,16 +39,30 @@
 
     var errorButton = error.querySelector('.error__button');
     errorButton.addEventListener('click', function () {
-      error.remove();
-    });
-    document.addEventListener('click', function () {
-      error.remove();
+      errorRemove();
     });
     errorButton.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.utils.KEYCODE_ENTER) {
-        error.remove();
+        errorRemove();
       }
     });
+
+    error.addEventListener('click', function () {
+      errorRemove();
+    });
+
+    var onPressEscButton = function (evt) {
+      if (evt.keyCode === window.utils.KEYCODE_ESC) {
+        errorRemove();
+      }
+    };
+
+    document.addEventListener('keydown', onPressEscButton);
+
+    var errorRemove = function () {
+      error.remove();
+      document.removeEventListener('keydown', onPressEscButton);
+    };
   };
 
   window.message = {
