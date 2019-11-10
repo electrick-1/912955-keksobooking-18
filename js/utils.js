@@ -20,7 +20,9 @@
     KEYCODE_ESC: 27,
     MAIN_PIN: {
       WIDTH: 65,
-      HEIGHT: 80
+      HEIGHT: 80,
+      LEFT: 570,
+      TOP: 375
     },
     PIN: {
       WIDTH: 50,
