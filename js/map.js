@@ -38,7 +38,7 @@
   };
 
   var activePage = function () {
-    window.load(successHandler, window.message.errorHandler);
+    window.load(successHandler, window.form.errorHandler);
     removeDisabledAttribute();
     setAddress();
   };
