@@ -85,7 +85,7 @@
   };
 
   var successHandler = function () {
-    formReset();
+    window.map.formReset();
     window.utils.main.insertAdjacentElement('afterbegin', success);
 
     success.addEventListener('click', function () {
@@ -116,23 +116,13 @@
     document.addEventListener('keydown', onEscErrorScreen);
   };
 
-  var formReset = function () {
-    form.reset();
-    window.pin.removePins();
-    if (document.querySelector('.map__card')) {
-      window.card.removeCard();
-    }
-    window.map.mapPinMain.style.top = window.utils.MAIN_PIN.TOP + 'px';
-    window.map.mapPinMain.style.left = window.utils.MAIN_PIN.LEFT + 'px';
-    window.map.setAddress();
-  };
-
   form.addEventListener('submit', function (evt) {
     window.save(new FormData(form), successHandler, errorHandler);
     evt.preventDefault();
   });
 
   window.form = {
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    form: form
   };
 })();
