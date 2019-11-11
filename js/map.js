@@ -36,7 +36,10 @@
   };
 
   var setAddress = function () {
-    createPinAddress.value = (Math.floor(mapPinMain.offsetTop + window.utils.MAIN_PIN.HEIGHT)) + 'px , ' + Math.floor((mapPinMain.offsetLeft + window.utils.MAIN_PIN.WIDTH / 2)) + 'px';
+    createPinAddress.value = (Math.floor(mapPinMain.offsetTop + window.utils.MAIN_PIN.HEIGHT)) +
+                              'px , ' +
+                              Math.floor((mapPinMain.offsetLeft + window.utils.MAIN_PIN.WIDTH / 2)) +
+                              'px';
     createPinAddress.setAttribute('readonly', true);
   };
 
