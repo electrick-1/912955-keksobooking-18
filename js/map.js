@@ -130,6 +130,7 @@
   var formReset = function () {
     window.form.form.reset();
     window.pin.removePins();
+    mapFilters.reset();
     if (document.querySelector('.map__card')) {
       window.card.removeCard();
     }
