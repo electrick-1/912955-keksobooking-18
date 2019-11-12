@@ -43,25 +43,6 @@
     });
   };
 
-  roomNumber.addEventListener('change', function (evt) {
-    checkRoom(evt.target.value);
-  });
-
-  type.addEventListener('change', function () {
-    price.placeholder = typeValues[type.value];
-    price.min = typeValues[type.value];
-  });
-
-  timeIn.addEventListener('change', function () {
-    timeOut.value = timeIn.value;
-  });
-
-  timeOut.addEventListener('change', function () {
-    timeIn.value = timeOut.value;
-  });
-
-  checkRoom(1);
-
   var onEscErrorScreen = function (evt) {
     if (evt.keyCode === window.utils.KEYCODE_ESC) {
       errorRemove();
@@ -120,6 +101,25 @@
     window.save(new FormData(form), successHandler, errorHandler);
     evt.preventDefault();
   });
+
+  roomNumber.addEventListener('change', function (evt) {
+    checkRoom(evt.target.value);
+  });
+
+  type.addEventListener('change', function () {
+    price.placeholder = typeValues[type.value];
+    price.min = typeValues[type.value];
+  });
+
+  timeIn.addEventListener('change', function () {
+    timeOut.value = timeIn.value;
+  });
+
+  timeOut.addEventListener('change', function () {
+    timeIn.value = timeOut.value;
+  });
+
+  checkRoom(1);
 
   window.form = {
     errorHandler: errorHandler,

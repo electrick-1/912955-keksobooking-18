@@ -11,24 +11,19 @@
     mapPinElement.querySelector('img').src = pin.author.avatar;
     mapPinElement.querySelector('img').alt = pin.offer.title;
 
-    mapPinElement.addEventListener('click', function () {
+    mapPinElement.addEventListener('click', function (evt) {
       pinListenerHandler(pin);
+      evt.currentTarget.classList.add('map__pin--active');
     });
 
     mapPinElement.addEventListener('keydown', function (evt) {
       if (evt.keyCode === window.utils.KEYCODE_ENTER) {
         pinListenerHandler(pin);
+        evt.currentTarget.classList.add('map__pin--active');
       }
     });
 
     return mapPinElement;
-  };
-
-  var pinListenerHandler = function (dataPin) {
-    if (document.querySelector('.map__card')) {
-      window.card.removeCard();
-    }
-    window.card.renderCard(dataPin);
   };
 
   var removePins = function () {
@@ -42,6 +37,13 @@
     dataPin.forEach(function (it) {
       mapPins.appendChild(createMapPin(it));
     });
+  };
+
+  var pinListenerHandler = function (dataPin) {
+    if (document.querySelector('.map__card')) {
+      window.card.removeCard();
+    }
+    window.card.renderCard(dataPin);
   };
 
   window.pin = {

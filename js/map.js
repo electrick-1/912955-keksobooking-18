@@ -4,6 +4,7 @@
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
   var adForm = document.querySelector('.ad-form');
+  var adFormReset = adForm.querySelector('.ad-form__reset');
   var createPinAddress = adForm.querySelector('#address');
   var mapFilters = document.querySelector('.map__filters');
   var fieldsetArray = adForm.querySelectorAll('fieldset');
@@ -22,7 +23,6 @@
       mapFilters.children[j].setAttribute('disabled', true);
     }
   };
-  mapFiltersDisabled();
 
   var removeDisabledAttribute = function () {
     for (var i = 0; i < fieldsetArray.length; i++) {
@@ -45,12 +45,11 @@
 
   var activePage = function () {
     window.load(successHandler, window.form.errorHandler);
-    mapPinMain.addEventListener('mousedown', onMouseDown);
     removeDisabledAttribute();
     setAddress();
-  };
 
-  mapPinMain.addEventListener('mousedown', activePage);
+    mapPinMain.removeEventListener('mousedown', activePage);
+  };
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.keyCode === window.utils.KEYCODE_ENTER) {
@@ -60,7 +59,6 @@
 
   var onMouseDown = function (downEvt) {
     downEvt.preventDefault();
-    mapPinMain.removeEventListener('mousedown', activePage);
 
     var startCoords = {
       x: downEvt.clientX,
@@ -139,9 +137,22 @@
     setAddress();
     adForm.classList.add('ad-form--disabled');
     map.classList.add('map--faded');
-    mapPinMain.removeEventListener('mousedown', onMouseDown);
     mapPinMain.addEventListener('mousedown', activePage);
+    mapPinMain.addEventListener('mousedown', onMouseDown);
   };
+
+  adFormReset.addEventListener('click', formReset);
+  adFormReset.addEventListener('keydown', function (evt) {
+    evt.preventDefault();
+    if (evt.keyCode === window.utils.KEYCODE_ENTER) {
+      formReset();
+    }
+  });
+
+  mapPinMain.addEventListener('mousedown', activePage);
+  mapPinMain.addEventListener('mousedown', onMouseDown);
+
+  mapFiltersDisabled();
 
   window.map = {
     map: map,

@@ -82,6 +82,7 @@
 
   var removeCard = function () {
     document.querySelector('.map__card').remove();
+    document.querySelector('.map__pin--active').classList.remove('map__pin--active');
     document.removeEventListener('keydown', pushEscButton);
   };
 

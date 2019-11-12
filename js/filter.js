@@ -47,8 +47,6 @@
     });
   };
 
-  getHousingFeatures();
-
   var getAllFilter = function (data) {
     return data.filter(function (obj) {
       return getHousingType(obj) &&
@@ -61,8 +59,13 @@
 
   var changeHousingHandler = window.debounce(function () {
     window.pin.removePins();
+    if (document.querySelector('.map__card')) {
+      window.card.removeCard();
+    }
     window.pin.renderPins(getAllFilter(window.data));
   });
+
+  getHousingFeatures();
 
   window.map.mapFilters.addEventListener('change', changeHousingHandler);
 
